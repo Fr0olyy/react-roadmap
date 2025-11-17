@@ -1,58 +1,38 @@
-import { useState } from "react";
-import {ProgressHeader} from "./components/ProgressHeader/ProgressHeader";
-import TechnologyList from "./components/TechnologyList/TechnologyList";
-import SearchBox from "./components/SearchBox/SearchBox";
-import QuickActions from "./components/QuickActions/QuickActions";
-import { useTechnologies } from "./hooks/useTechnologies";
-import "./App.css";
+import { BrowserRouter, Routes, Route } from 'react-router';
+import { HomePageFlow } from './pages/HomePageFlow';
+import { DetailPage } from './pages/DetailPage';
+import { useLocalStorage } from './hooks/useLocalStorage';
 
-export default function App() {
-  const {
-    technologies,
-    changeStatus,
-    updateNotes,
-    markAllCompleted,
-    resetAllStatuses,
-    pickRandom,
-    exportData,
-    importData
-  } = useTechnologies();
-
-  const [searchQuery, setSearchQuery] = useState("");
-
-  const filteredTechnologies = technologies.filter(
-    (tech) =>
-      tech.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      tech.description.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
-  const handlePickRandom = () => {
-    const random = pickRandom();
-    if (random) {
-      alert(`🎯 ${random.title} выбран для начала!`);
-    }
-  };
+function App() {
+  const [roadmap, setRoadmap] = useLocalStorage('roadmap', null);
+  const [error, setError] = useLocalStorage('error', '');
 
   return (
-    <div className="app-container">
-      <ProgressHeader technologies={filteredTechnologies} />
-      <SearchBox
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        count={filteredTechnologies.length}
-      />
-      <QuickActions
-        onMarkAllCompleted={markAllCompleted}
-        onResetAll={resetAllStatuses}
-        onPickRandom={handlePickRandom}
-        onExport={exportData}
-        onImport={importData}
-      />
-      <TechnologyList
-        technologies={filteredTechnologies}
-        onChangeStatus={changeStatus}
-        onUpdateNotes={updateNotes}
-      />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route 
+          path="/" 
+          element={
+            <HomePageFlow
+              roadmap={roadmap} 
+              setRoadmap={setRoadmap}
+              error={error}
+              setError={setError}
+            />
+          } 
+        />
+        <Route 
+          path="/item/:id" 
+          element={
+            <DetailPage 
+              roadmap={roadmap} 
+              setRoadmap={setRoadmap}
+            />
+          } 
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }
+
+export default App;

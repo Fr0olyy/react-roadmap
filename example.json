@@ -1,0 +1,33 @@
+{
+  "name": "React Developer Roadmap",
+  "description": "Полная дорожная карта для изучения React 2025",
+  "items": [
+    {
+      "id": "react-1",
+      "name": "Основы React",
+      "description": "Изучение компонентов, JSX, props и state",
+      "link": "https://react.dev/learn",
+      "status": "not_started",
+      "note": "",
+      "deadline": ""
+    },
+    {
+      "id": "react-2",
+      "name": "React Hooks",
+      "description": "useState, useEffect, useContext и другие встроенные хуки",
+      "link": "https://react.dev/reference/react",
+      "status": "in_progress",
+      "note": "Уже изучил useState и useEffect",
+      "deadline": "2025-12-01"
+    },
+    {
+      "id": "react-3",
+      "name": "React Router",
+      "description": "Маршрутизация в React приложениях",
+      "link": "https://reactrouter.com/",
+      "status": "completed",
+      "note": "Прошел официальный туториал",
+      "deadline": "2025-11-15"
+    }
+  ]
+}
